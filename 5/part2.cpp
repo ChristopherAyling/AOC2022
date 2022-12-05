@@ -54,11 +54,14 @@ std::tuple<int, int, int> get_instruction(std::string str) {
 
 void execute_instruction(std::tuple<int, int, int> instruction, std::vector<containers_t> &stacks) {
     auto [num, from, to] = instruction;
+    std::deque<char> picked_up;
     for (int i=0; i<num; i++) {
         char back = stacks[from].back();
-        std::cout << "-- moving " << back << " from " << from+1 << " to " << to+1 << std::endl;
-        stacks[to].push_back(back);
+        picked_up.push_front(back);
         stacks[from].pop_back();
+    }
+    for (char item : picked_up) {
+        stacks[to].push_back(item);
     }
 }
 
